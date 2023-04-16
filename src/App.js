@@ -35,6 +35,36 @@ class App extends Component {
     this.setState({currentUser: newUser})
   }
 
+  // Add new credit item into creditList based on the submitted info
+  addCredit = (description, amount) => {
+    const newCredit = {
+      id: this.state.creditList.length + 1,
+      description,
+      amount,
+      date: new Date().toISOString(),
+    };
+
+    let newCreditList = this.state.creditList.slice();
+    newCreditList.push(newCredit);
+    this.setState({creditList: newCreditList});
+    // console.log(newCreditList);
+  }
+
+  // Add new debit item into debitList based on the submitted info
+  addDebit = (description, amount) => {
+    const newDebit = {
+      id: this.state.debitList.length + 1,
+      description,
+      amount,
+      date: new Date().toISOString(),
+    };
+
+    let newDebitList = this.state.debitList.slice();
+    newDebitList.push(newDebit);
+    this.setState({debitList: newDebitList});
+    // console.log(newDebitList);
+  }
+
   // Lifecycle method to make API requests to retrieve credit and debit data from two different APIs
   // then calculate the total credit and debit amounts, which is used to calculate the account balance.
   async componentDidMount() {
@@ -87,8 +117,8 @@ class App extends Component {
       <UserProfile userName={this.state.currentUser.userName} memberSince={this.state.currentUser.memberSince} />
     )
     const LogInComponent = () => (<LogIn user={this.state.currentUser} mockLogIn={this.mockLogIn} />)
-    const CreditsComponent = () => (<Credits credits={this.state.creditList} />) 
-    const DebitsComponent = () => (<Debits debits={this.state.debitList} />) 
+    const CreditsComponent = () => (<Credits credits={this.state.creditList} addCredit={this.addCredit} />) 
+    const DebitsComponent = () => (<Debits debits={this.state.debitList} addDebit={this.addDebit}/>) 
 
     // Important: Include the "basename" in Router, which is needed for deploying the React app to GitHub Pages
     return (
