@@ -18,7 +18,7 @@ class App extends Component {
   constructor() {  // Create and initialize state
     super(); 
     this.state = {
-      accountBalance: 1234567.89,
+      accountBalance: 0,
       creditList: [],
       debitList: [],
       currentUser: {
@@ -35,6 +35,18 @@ class App extends Component {
     this.setState({currentUser: newUser})
   }
 
+  calculateBalance = () => {
+    const creditAmount = this.state.creditList.map(obj => obj.amount);
+    const creditTotal = Number(creditAmount.reduce((total, amount) => total + amount, 0));
+
+    const debitAmount = this.state.debitList.map(obj => obj.amount);
+    const debitTotal = Number(debitAmount.reduce((total, amount) => total + amount, 0));
+
+    // console.log(this.state.accountBalance);
+    this.setState({accountBalance: Number(creditTotal - debitTotal)});
+    // console.log(this.state.accountBalance);
+  }
+
   // Add new credit item into creditList based on the submitted info
   addCredit = (description, amount) => {
     const newCredit = {
@@ -44,10 +56,14 @@ class App extends Component {
       date: new Date().toISOString(),
     };
 
-    let newCreditList = this.state.creditList.slice();
-    newCreditList.push(newCredit);
-    this.setState({creditList: newCreditList});
-    // console.log(newCreditList);
+    // const newList = [...this.state.creditList, newCredit];
+    // this.setState({creditList: newList});
+    // console.log(newList);
+    
+    this.state.creditList.push(newCredit);
+    // console.log(this.state.creditList);
+     
+    this.calculateBalance();
   }
 
   // Add new debit item into debitList based on the submitted info
@@ -59,10 +75,13 @@ class App extends Component {
       date: new Date().toISOString(),
     };
 
-    let newDebitList = this.state.debitList.slice();
-    newDebitList.push(newDebit);
-    this.setState({debitList: newDebitList});
-    // console.log(newDebitList);
+    // let newList = [...this.state.debitList, newDebit];
+    // this.setState({debitList: newList});
+    // console.log(newList);
+
+    this.state.debitList.push(newDebit);
+    // console.log(this.state.debitList);
+    this.calculateBalance();
   }
 
   // Lifecycle method to make API requests to retrieve credit and debit data from two different APIs
@@ -84,8 +103,8 @@ class App extends Component {
         console.log('Fetch error:', error.message);
     }
 
-    const debitAmount = this.state.debitList.map(obj => obj.amount);
-    const debitTotal = Number(debitAmount.reduce((total, amount) => total + amount, 0).toFixed(2));
+    // const debitAmount = this.state.debitList.map(obj => obj.amount);
+    // const debitTotal = Number(debitAmount.reduce((total, amount) => total + amount, 0).toFixed(2));
     // console.log(debitTotal);
 
     try {
@@ -101,12 +120,9 @@ class App extends Component {
         console.log('Fetch error:', error.message);
     }
 
-    const creditAmount = this.state.creditList.map(obj => obj.amount);
-    const creditTotal = Number(creditAmount.reduce((total, amount) => total + amount, 0).toFixed(2));
-    // console.log(creditTotal);
-
-    this.setState({accountBalance: Number(creditTotal - debitTotal).toFixed(2)});
-    // console.log(creditTotal - debitTotal);
+    // const creditAmount = this.state.creditList.map(obj => obj.amount);
+    // const creditTotal = Number(creditAmount.reduce((total, amount) => total + amount, 0).toFixed(2));
+    this.calculateBalance();
   }
 
   // Create Routes and React elements to be rendered using React components

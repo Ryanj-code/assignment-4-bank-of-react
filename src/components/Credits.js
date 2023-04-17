@@ -20,9 +20,9 @@ const Credits = (props) => {
     e.preventDefault();
     const description = e.target.elements.description.value;
     const amount = e.target.elements.amount.value;
-    console.log(description, amount);
-    console.log(props.addCredit);
-    props.addCredit(description, amount);
+    // console.log(description, amount);
+    // console.log(props.addCredit);
+    props.addCredit(description, Number(amount));
     e.target.reset();
   }
 

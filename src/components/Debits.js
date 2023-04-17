@@ -20,9 +20,9 @@ const Debits = (props) => {
     e.preventDefault();
     const description = e.target.elements.description.value;
     const amount = e.target.elements.amount.value;
-    console.log(description, amount);
-    console.log(props.addDebit);
-    props.addDebit(description, amount);
+    // console.log(description, amount);
+    // console.log(props.addDebit);
+    props.addDebit(description, Number(amount));
     e.target.reset();
   }
 
