@@ -35,6 +35,7 @@ class App extends Component {
     this.setState({currentUser: newUser})
   }
 
+  // Calculates the account balance based on the current credits and debits list.
   calculateBalance = () => {
     const creditAmount = this.state.creditList.map(obj => obj.amount);
     const creditTotal = Number(creditAmount.reduce((total, amount) => total + amount, 0));
