@@ -33,15 +33,20 @@ class App extends Component {
     const newUser = {...this.state.currentUser};
     newUser.userName = logInInfo.userName;
     this.setState({currentUser: newUser})
+    this.componentDidMount();
   }
 
   // Calculates the account balance based on the current credits and debits list.
   calculateBalance = () => {
     const creditAmount = this.state.creditList.map(obj => obj.amount);
     const creditTotal = Number(creditAmount.reduce((total, amount) => total + amount, 0));
+    // console.log(creditAmount);
+    console.log(creditTotal, "credit");
 
     const debitAmount = this.state.debitList.map(obj => obj.amount);
     const debitTotal = Number(debitAmount.reduce((total, amount) => total + amount, 0));
+    // console.log(debitAmount);
+    console.log(debitTotal, "debit");
 
     // console.log(this.state.accountBalance);
     this.setState({accountBalance: Number(creditTotal - debitTotal)});
