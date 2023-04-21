@@ -20,7 +20,8 @@ const Credits = (props) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const description = e.target.elements.description.value;
-    const amount = e.target.elements.amount.value;
+    let amount = e.target.elements.amount.value;
+    amount = parseFloat(amount).toFixed(2);
     // console.log(description, amount);
     // console.log(props.addCredit);
     props.addCredit(description, Number(amount));
