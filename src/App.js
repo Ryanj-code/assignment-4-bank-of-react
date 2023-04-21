@@ -49,7 +49,8 @@ class App extends Component {
     console.log(debitTotal, "debit");
 
     // console.log(this.state.accountBalance);
-    this.setState({accountBalance: Number(creditTotal - debitTotal)});
+    const accountTotal = (creditTotal - debitTotal).toFixed(2);
+    this.setState({accountBalance: accountTotal});
     // console.log(this.state.accountBalance);
   }
 
